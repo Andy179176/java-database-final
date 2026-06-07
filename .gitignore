@@ -127,3 +127,31 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Ignoring IDE and editor configuration files
+.idea/
+.vs/
+.vscode/
+*.swp
+*.swo
+*.iml
+
+# Ignoring build directories and dependencies
+# Java build directory
+**/target
+# IntelliJ build directory
+**/out
+# General build directory
+**/build
+# Distribution build directory
+**/dist
+# Node.js modules directory
+**/node_modules
+
+# Ignoring log and temporary files
+*.log
+*.tmp
+*.temp
+
+# Ignoring Java compiled files
+*.class
