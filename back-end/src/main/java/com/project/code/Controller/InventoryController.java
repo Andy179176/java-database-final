@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.code.Model.CombinedRequest;
@@ -23,7 +22,6 @@ import com.project.code.Repo.ProductRepository;
 import com.project.code.Service.ServiceClass;
 
 @RestController
-@RequestMapping("/inventory")
 public class InventoryController {
 
     @Autowired
@@ -115,7 +113,7 @@ public class InventoryController {
             return map;
         } else if (name.equals("null")) {
             System.out.println("name is null");
-            map.put("product", productRepository.findByCategoryAndStoreId(storeid, category));
+            map.put("product", productRepository.findByStoreIdAndCategory(storeid, category));
             return map;
         }
         map.put("product", productRepository.findByNameAndCategory(storeid, name, category));

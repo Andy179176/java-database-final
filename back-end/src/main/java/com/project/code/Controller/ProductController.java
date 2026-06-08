@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,15 +55,13 @@ public class ProductController {
         return map;
     }
 
-    @GetMapping("/product/{id}")
-    public Map<String, Object> getProductbyId(@PathVariable Long id) {
-        System.out.println("result: ");
-        System.out.println("result: ");
-        System.out.println("result: ");
+    // GET "/product/{id}
+    @GetMapping("/{id}")
+    public Map<String, Object> getProductById(@PathVariable Long id) {
+
         Map<String, Object> map = new HashMap<>();
         Product result = productRepository.findByid(id);
 
-        System.out.println("result: " + result);
         map.put("products", result);
         return map;
     }
@@ -114,6 +113,7 @@ public class ProductController {
         return map;
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
     public Map<String, String> deleteProduct(@PathVariable Long id) {
         Map<String, String> map = new HashMap<>();
@@ -122,9 +122,13 @@ public class ProductController {
             map.put("message", "Id " + id + " not present in database");
             return map;
         }
-        inventoryRepository.deleteByProductId(id);
-        orderItemRepository.deleteByProductId(id);
-        productRepository.deleteById(id);
+        try {
+            inventoryRepository.deleteByProductId(id);
+            orderItemRepository.deleteByProductId(id);
+            productRepository.deleteById(id);
+        } catch (Exception e){
+            throw new RuntimeException("Delete Product error");
+        }
 
         map.put("message", "Deleted product successfully with id: " + id);
         return map;

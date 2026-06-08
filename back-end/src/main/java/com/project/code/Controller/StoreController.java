@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,17 +47,17 @@ public class StoreController {
     }
 
     @PostMapping("/placeOrder")
-    public Map<String, String> placeOrder(@RequestBody PlaceOrderRequestDTO placeOrderRequest) {
-
+    public ResponseEntity<Map<String, String>> placeOrder(@RequestBody PlaceOrderRequestDTO placeOrderRequest) {
         Map<String, String> map = new HashMap<>();
-        try {
+        try {  // try catch to handle place orders error
             orderService.saveOrder(placeOrderRequest);
             map.put("message", "Order placed successfully");
-        } catch (Error e) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(map);
+        } catch (Exception e) {
             map.put("Error", "" + e);
-
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(map);
         }
-        return map;
+
     }
 // 1. Set Up the Controller Class:
 //    - Annotate the class with `@RestController` to designate it as a REST controller for handling HTTP requests.

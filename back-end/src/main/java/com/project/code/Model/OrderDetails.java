@@ -21,18 +21,19 @@ public class OrderDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @JsonBackReference("customer-orders")
     private Customer customer;
 
+
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "store_id")
-    @JsonManagedReference
-    private Store store;
+    private Store store; // store field is annotated @ManyToOne and @JoinColumn(name = "store_id")
 
     private Double totalPrice;
-    private LocalDateTime date;
+    private LocalDateTime date; // order date use LocalDateTime
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     @JsonManagedReference

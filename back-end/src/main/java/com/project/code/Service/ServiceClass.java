@@ -19,6 +19,17 @@ public class ServiceClass {
         this.productRepository = productRepository;
     }
 
+    // validateInventory checks for an existing inventory entry using product and store IDs
+    public boolean validateInventory(Long productID, Long storeID) {
+        Inventory result = inventoryRepository.findByProductIdandStoreId(productID, storeID);
+        if (result != null) {
+            return false;
+        }
+        return true;
+    }
+
+
+
     public boolean validateInventory(Inventory inventory) {
         Inventory result = inventoryRepository.findByProductIdandStoreId(inventory.getProduct().getId(), inventory.getStore().getId());
         if (result != null) {
@@ -46,6 +57,13 @@ public class ServiceClass {
 
     public Inventory getInventoryId(Inventory inventory) {
         Inventory result = inventoryRepository.findByProductIdandStoreId(inventory.getProduct().getId(), inventory.getStore().getId());
+
+        return result;
+    }
+
+    // getInventoryId queries inventory using product and store IDs and returns the correct record.
+    public Inventory getInventoryId(Long productID, Long storeID) {
+        Inventory result = inventoryRepository.findByProductIdandStoreId(productID, storeID);
 
         return result;
     }

@@ -24,8 +24,9 @@ public class Customer {
     private String phone;
 
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    @JsonManagedReference("customer-orders")
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER) // EAGER for eagerly fetching the order list
     private List<OrderDetails> orders;
 
 

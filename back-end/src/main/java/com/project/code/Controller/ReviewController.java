@@ -58,7 +58,8 @@ public class ReviewController {
     @GetMapping
     public Map<String, Object> getAllReviews() {
         Map<String, Object> map = new HashMap<>();
-        map.put("reviews", reviewRepository.findAll());
+        List<Review> allReview = reviewRepository.findAll();
+        map.put("reviews", allReview);
         return map;
     }
 // 1. Set Up the Controller Class:
