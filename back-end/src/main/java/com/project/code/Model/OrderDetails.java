@@ -3,6 +3,7 @@ package com.project.code.Model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -22,7 +23,7 @@ public class OrderDetails {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @JsonManagedReference
+    @JsonBackReference("customer-orders")
     private Customer customer;
 
     @ManyToOne
@@ -36,7 +37,6 @@ public class OrderDetails {
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<OrderItem> orderItems;
-
 
 
     public Long getId() {
@@ -87,7 +87,8 @@ public class OrderDetails {
         this.orderItems = orderItems;
     }
 
-    public OrderDetails() {}
+    public OrderDetails() {
+    }
 
     public OrderDetails(Customer customer, Store store, Double totalPrice, LocalDateTime date) {
         this.customer = customer;

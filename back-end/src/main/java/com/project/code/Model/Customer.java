@@ -25,7 +25,7 @@ public class Customer {
 
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference("customer-orders")
     private List<OrderDetails> orders;
 
 
@@ -72,12 +72,11 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name, String email, String phone) {
+    public Customer(@NotNull String name, @NotNull String email, @NotNull String phone) {
         this.name = name;
         this.email = email;
         this.phone = phone;
     }
-
 
 
 // 1. Add 'id' field:
